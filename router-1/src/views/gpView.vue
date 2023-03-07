@@ -32,9 +32,6 @@ const {add,findGp} = useFavorito;
 getData(`https://ergast.com/api/f1/2023/${route.params.round}.json`);
 </script>
 <template>
-    <h1>Home counter: {{useCounter.count }} </h1>
-  <h2>Double: {{ useCounter.double }}</h2>
-  <button @click="useCounter.increment">Increment</button>
     <p v-if="loading">Cargando Informacion...</p>
     <div class="alert alert-danger" v-else-if="error" > 404 : No existe la carrera</div>
     <div v-else-if="data">
