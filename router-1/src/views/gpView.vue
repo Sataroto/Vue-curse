@@ -3,16 +3,20 @@
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 import { useGetData } from '@/composables/getData';
+import {useCounterStore} from '@/store/counter.js'
+import {useFavoritoStore} from '@/store/favoritos.js'
 
 const route = useRoute();
 const router = useRouter();
-
+const useCounter = useCounterStore()
+const useFavorito = useFavoritoStore();
 const back = () => {
     router.push('/calendar');
 }
 
 const { data, getData, loading, error } = useGetData();
 
+const {add,findGp} = useFavorito;
 
 /*const getData = async () =>{
     try {
@@ -26,7 +30,6 @@ const { data, getData, loading, error } = useGetData();
     }
 };*/
 getData(`https://ergast.com/api/f1/2023/${route.params.round}.json`);
-console.log(data)
 </script>
 <template>
     <p v-if="loading">Cargando Informacion...</p>
@@ -62,6 +65,7 @@ console.log(data)
                 <td>{{ data.MRData.RaceTable.Races[0].date }}</td>
             </tr>
         </table>
+        <button :disabled="findGp(data.MRData.RaceTable.Races[0].round)" @click="add(data.MRData.RaceTable.Races[0])" class="btn btn-outline-success mb-2">Agregar Favoritos</button>
     </div>
-    <button @click="back" class="btn btn-outline-primary me-2">Regresar</button>
+    <button @click="back" class="btn btn-outline-primary">Regresar</button>
 </template>
